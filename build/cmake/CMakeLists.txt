@@ -7,7 +7,7 @@
 # in the COPYING file in the root directory of this source tree).
 # ################################################################
 
-cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.10)
 
 # As of 2018-12-26 ZSTD has been validated to build with cmake version 3.13.2 new policies.
 # Set and use the newest cmake policies that are validated to work
@@ -38,6 +38,19 @@ project(zstd
   LANGUAGES C   # Main library is in C
             ASM # And ASM
   )
+
+# Enable C++ support for testing.
+set(ZSTD_ENABLE_CXX ${ZSTD_BUILD_TESTS})
+
+if(ZSTD_ENABLE_CXX)
+    enable_language(CXX)
+endif()
+
+option(USE_VCLTL "USE VCLTL" OFF)
+
+if(USE_VCLTL)
+include("VC-LTL helper for cmake.cmake")
+endif()
 
 message(STATUS "ZSTD VERSION: ${zstd_VERSION}")
 set(zstd_HOMEPAGE_URL "https://facebook.github.io/zstd")
@@ -115,13 +128,6 @@ option(ZSTD_BUILD_TESTS "BUILD TESTS" ${ZSTD_BUILD_TESTS_default})
 if (MSVC)
     option(ZSTD_USE_STATIC_RUNTIME "LINK TO STATIC RUN-TIME LIBRARIES" OFF)
 endif ()
-
-# Enable C++ support for testing.
-set(ZSTD_ENABLE_CXX ${ZSTD_BUILD_TESTS})
-
-if(ZSTD_ENABLE_CXX)
-    enable_language(CXX)
-endif()
 
 #-----------------------------------------------------------------------------
 # Add extra compilation flags
