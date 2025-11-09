@@ -125,8 +125,15 @@ endif ()
 # Enable C++ support for testing.
 set(ZSTD_ENABLE_CXX ${ZSTD_BUILD_TESTS})
 
+message(STATUS "BUILD_TESTING: ${BUILD_TESTING}")
+message(STATUS "ZSTD_BUILD_TESTS: ${ZSTD_BUILD_TESTS}")
+message(STATUS "ZSTD_ENABLE_CXX: ${ZSTD_ENABLE_CXX}")
+
 if(ZSTD_ENABLE_CXX)
+    message(STATUS "Enabling CXX language support")
     enable_language(CXX)
+else()
+    message(STATUS "CXX language support disabled")
 endif()
 
 #-----------------------------------------------------------------------------
@@ -134,8 +141,10 @@ endif()
 #-----------------------------------------------------------------------------
 include(AddZstdCompilationFlags)
 if(ZSTD_ENABLE_CXX)
+    message(STATUS "Using ADD_ZSTD_COMPILATION_FLAGS with CXX enabled")
     ADD_ZSTD_COMPILATION_FLAGS(ON ON ON) # C CXX LD
 else()
+    message(STATUS "Using ADD_ZSTD_COMPILATION_FLAGS with CXX disabled")
     ADD_ZSTD_COMPILATION_FLAGS(ON OFF ON) # C CXX LD
 endif()
 
