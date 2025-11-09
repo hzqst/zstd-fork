@@ -39,13 +39,6 @@ project(zstd
             ASM # And ASM
   )
 
-# Enable C++ support for testing.
-set(ZSTD_ENABLE_CXX ${ZSTD_BUILD_TESTS})
-
-if(ZSTD_ENABLE_CXX)
-    enable_language(CXX)
-endif()
-
 option(USE_VCLTL "USE VCLTL" OFF)
 
 if(USE_VCLTL)
@@ -128,6 +121,13 @@ option(ZSTD_BUILD_TESTS "BUILD TESTS" ${ZSTD_BUILD_TESTS_default})
 if (MSVC)
     option(ZSTD_USE_STATIC_RUNTIME "LINK TO STATIC RUN-TIME LIBRARIES" OFF)
 endif ()
+
+# Enable C++ support for testing.
+set(ZSTD_ENABLE_CXX ${ZSTD_BUILD_TESTS})
+
+if(ZSTD_ENABLE_CXX)
+    enable_language(CXX)
+endif()
 
 #-----------------------------------------------------------------------------
 # Add extra compilation flags
