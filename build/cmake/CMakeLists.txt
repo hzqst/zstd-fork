@@ -133,7 +133,11 @@ endif ()
 # Add extra compilation flags
 #-----------------------------------------------------------------------------
 include(AddZstdCompilationFlags)
-ADD_ZSTD_COMPILATION_FLAGS(ON ZSTD_ENABLE_CXX ON) # C CXX LD
+if(ZSTD_ENABLE_CXX)
+    ADD_ZSTD_COMPILATION_FLAGS(ON ON ON) # C CXX LD
+else()
+    ADD_ZSTD_COMPILATION_FLAGS(ON OFF ON) # C CXX LD
+endif()
 
 #-----------------------------------------------------------------------------
 # External dependencies
